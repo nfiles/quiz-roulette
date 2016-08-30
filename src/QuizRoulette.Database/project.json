@@ -4,21 +4,31 @@
         "debugType": "portable"
     },
     "dependencies": {
-        "Npgsql.EntityFrameworkCore.PostgreSQL": "1.0.1",
-        "NETStandard.Library": "1.6.0"
+        "Npgsql.EntityFrameworkCore.PostgreSQL": "1.0.1"
     },
     "frameworks": {
-        "netstandard1.6": {},
         "netcoreapp1.0": {
+            "buildOptions": {
+                "emitEntryPoint": true,
+                "define": [
+                    "APP"
+                ]
+            },
             "dependencies": {
-                "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final",
                 "Microsoft.NETCore.App": {
                     "type": "platform",
-                    "version": "1.0.0"
-                }
-            },
+                    "version": "1.0.0-*"
+                },
+                "Npgsql.EntityFrameworkCore.PostgreSQL.Design": "1.0.1",
+                "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final"
+            }
+        },
+        "netstandard1.3": {
             "buildOptions": {
-                "emitEntryPoint": true
+                "emitEntryPoint": false
+            },
+            "dependencies": {
+                "NETStandard.Library": "1.6.0"
             }
         }
     },
