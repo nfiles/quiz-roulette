@@ -1,0 +1,5 @@
+*.lock.json
+
+# dotnet compilation artifacts
+bin/
+obj/
