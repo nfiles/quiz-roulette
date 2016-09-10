@@ -1,6 +1,8 @@
 #if APP
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace QuizRoulette.Database
 {
@@ -8,11 +10,18 @@ namespace QuizRoulette.Database
     {
         public static void Main(string[] args) { }
 
+        public IConfiguration Configuration { get; set; }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddUserSecrets()
+                .Build();
+
             services.AddDbContext<QuizDbContext>(options =>
             {
-                options.UseNpgsql("User ID=quizadmin;Password=Qu1zP@ssw0rd!;Host=localhost;Port=5432;Database=quizdb;");
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
         }
     }
