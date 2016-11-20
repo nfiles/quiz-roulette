@@ -3,12 +3,14 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace QuizRoulette.Database
 {
-    public partial class QuizDbContext : DbContext
+    public partial class QuizDbContext
     {
         public QuizDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            OnModelCreatingExtended(modelBuilder);
+
             modelBuilder.Entity<Class>(entity =>
             {
                 entity.HasKey(e => e.Identifier)
@@ -176,40 +178,8 @@ namespace QuizRoulette.Database
 
             modelBuilder.Entity<Student>(entity =>
             {
-                entity.HasKey(e => e.Identifier)
-                    .HasName("PK_students");
-
-                entity.ToTable("students", "quiz");
-
-                entity.Property(e => e.Identifier)
-                    .HasColumnName("identifier")
-                    .ValueGeneratedNever();
-
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnName("name")
-                    .HasColumnType("varchar")
-                    .HasMaxLength(150);
-
-                entity.Property(e => e.StudentNumber)
-                    .IsRequired()
-                    .HasColumnName("studentnumber")
-                    .HasColumnType("varchar")
-                    .HasMaxLength(25);
-            });
-
-            modelBuilder.Entity<Teacher>(entity =>
-            {
-                entity.HasKey(e => e.Identifier)
-                    .HasName("PK_teachers");
-
-                entity.ToTable("teachers", "quiz");
-
-                entity.Property(e => e.Identifier)
-                    .HasColumnName("identifier")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Name)
                     .HasColumnName("name")
                     .HasColumnType("varchar")
                     .HasMaxLength(150);
@@ -223,7 +193,5 @@ namespace QuizRoulette.Database
         public virtual DbSet<QuizTemplate> QuizTemplates { get; set; }
         public virtual DbSet<Quiz> Quizzes { get; set; }
         public virtual DbSet<StudentQuizResponse> StudentQuizResponses { get; set; }
-        public virtual DbSet<Student> Students { get; set; }
-        public virtual DbSet<Teacher> Teachers { get; set; }
     }
 }

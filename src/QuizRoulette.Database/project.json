@@ -6,7 +6,8 @@
     "emitEntryPoint": true
   },
   "dependencies": {
-    "Npgsql.EntityFrameworkCore.PostgreSQL": "1.0.1"
+    "Npgsql.EntityFrameworkCore.PostgreSQL": "1.0.1",
+    "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0"
   },
   "frameworks": {
     "netcoreapp1.0": {

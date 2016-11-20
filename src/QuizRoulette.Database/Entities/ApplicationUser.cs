@@ -1,18 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace QuizRoulette.Database
 {
-    public partial class Student
+    public class ApplicationUser : IdentityUser<Guid>
     {
-        public Student()
+        public ApplicationUser()
         {
             Enrollments = new HashSet<Enrollment>();
             StudentQuizResponses = new HashSet<StudentQuizResponse>();
         }
 
         public Guid Identifier { get; set; }
-        public string StudentNumber { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<Enrollment> Enrollments { get; set; }

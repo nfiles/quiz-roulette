@@ -2,14 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": "QuizRoulette.Web (console)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceRoot}/src/QuizRoulette.Database/bin/Debug/netcoreapp1.0/QuizRoulette.Database.dll",
+            "program": "${workspaceRoot}/src/QuizRoulette.Web/bin/Debug/netcoreapp1.0/QuizRoulette.Web.dll",
             "args": [],
-            "cwd": "${workspaceRoot}",
-            "externalConsole": false,
+            "cwd": "${workspaceRoot}/src/QuizRoulette.Web",
+            "externalConsole": true,
             "stopAtEntry": false
         },
         {

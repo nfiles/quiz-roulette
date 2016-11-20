@@ -7,7 +7,8 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/src/QuizRoulette.Database/project.json"
+                "${workspaceRoot}/src/QuizRoulette.Database/project.json",
+                "${workspaceRoot}/src/QuizRoulette.Web/project.json"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
