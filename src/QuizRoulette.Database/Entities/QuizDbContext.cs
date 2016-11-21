@@ -176,7 +176,7 @@ namespace QuizRoulette.Database
                     .HasConstraintName("studentquizresponses_studentidentifier_fkey");
             });
 
-            modelBuilder.Entity<Student>(entity =>
+            modelBuilder.Entity<ApplicationUser>(entity =>
             {
                 entity.Property(e => e.Name)
                     .IsRequired()

@@ -8,9 +8,10 @@ using QuizRoulette.Database;
 namespace QuizRoulette.Database.Migrations
 {
     [DbContext(typeof(QuizDbContext))]
-    partial class QuizDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161121125946_RemoveLingeringStudentClassRef")]
+    partial class RemoveLingeringStudentClassRef
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("Npgsql:PostgresExtension:.uuid-ossp", "'uuid-ossp', '', ''")
