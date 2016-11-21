@@ -63,9 +63,12 @@
 
 ## Database Tables
 
-1. `Teachers`
+1. `ApplicationUser`
     - Identifier
-    - {connected to user by this identifier?}
+    - Name
+    - Role:Student
+    - Role:Teacher
+    - Claim:StudentNumber(?)
 1. `Classes`
     - Identifier
     - Name
@@ -76,10 +79,6 @@
 1. `Enrollment`
     - StudentIdentifier
     - SectionIdentifier
-1. `Students`
-    - Identifier
-    - StudentNumber
-    - Name
 1. `QuizTemplates`
     - collects all of the questions that are on a quiz
     - Identifier

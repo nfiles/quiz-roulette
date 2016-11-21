@@ -4,6 +4,8 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
-        "**/*.lock.json": { "when": "$(basename).json" }
+        "**/*.lock.json": { "when": "$(basename).json" },
+        "**/bin/": true,
+        "**/obj/": true
     }
 }

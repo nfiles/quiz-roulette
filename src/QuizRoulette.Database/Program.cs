@@ -21,7 +21,7 @@ namespace QuizRoulette.Database
 
             services.AddDbContext<QuizDbContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(Configuration.GetConnectionString("DeploymentConnection"));
             });
         }
     }

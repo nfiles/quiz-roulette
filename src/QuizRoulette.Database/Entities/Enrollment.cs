@@ -8,6 +8,6 @@ namespace QuizRoulette.Database
         public Guid ClassIdentifier { get; set; }
 
         public virtual Class Class { get; set; }
-        public virtual Student Student { get; set; }
+        public virtual ApplicationUser Student { get; set; }
     }
 }

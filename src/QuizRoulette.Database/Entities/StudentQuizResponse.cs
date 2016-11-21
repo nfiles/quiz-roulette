@@ -10,6 +10,6 @@ namespace QuizRoulette.Database
 
         public virtual QuestionResponse QuestionResponse { get; set; }
         public virtual Quiz Quiz { get; set; }
-        public virtual Student Student { get; set; }
+        public virtual ApplicationUser Student { get; set; }
     }
 }
