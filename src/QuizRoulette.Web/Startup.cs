@@ -79,6 +79,12 @@ namespace WebApplication
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Add("X-Clacks-Overhead", "GNU Terry Pratchett");
+                await next();
+            });
         }
     }
 }
