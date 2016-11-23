@@ -1,0 +1,14 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "rootDir": "scripts",
+        "outDir": "wwwroot/dist",
+        "inlineSourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "wwwroot"
+    ]
+}
