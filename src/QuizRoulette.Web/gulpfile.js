@@ -2,13 +2,15 @@
 'use strict';
 
 const gulp = require('gulp');
-const rimraf = require('rimraf');
+const del = require('del');
 const concat = require('gulp-concat');
 const cssmin = require('gulp-cssmin');
 const less = require('gulp-less');
-const typescript = require('gulp-typescript');
+const ts = require('gulp-typescript');
+const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
-const merge = require('merge-stream');
+const eventStream = require('event-stream');
+const plumber=require('gulp-plumber');
 
 const webroot = './wwwroot/';
 
@@ -22,35 +24,37 @@ const paths = {
     libDest: webroot + 'lib/',
     nodeModules: './node_modules/',
     clientSrc: './client/',
-    clientDest: webroot + 'dist/'
+    clientDest: webroot + 'app/'
 };
 paths.clientSrcTs = paths.clientSrc + '**/*.ts';
 paths.clientSrcLess = paths.clientSrc + '**/*.less';
 
-const npm_libs = [{
-    name: 'bootstrap',
-    css: ['dist/css/bootstrap.min.css'],
-    js: ['dist/js/bootstrap.min.js'],
-    fonts: ['dist/fonts/*']
-}, {
-    name: 'jquery',
-    js: ['dist/jquery.min.js']
-}];
+const npm_libs = {
+    bootstrap: [
+        'dist/css/bootstrap.min.css',
+        'dist/js/bootstrap.min.js',
+        'dist/fonts/*'
+    ],
+    jquery: ['dist/jquery.min.js'],
+    'core-js': ['client/shim.min.js']
+};
 
-gulp.task('clean:js', function (cb) {
-    rimraf(paths.concatJsDest, cb);
+const quizRouletteTsProject = ts.createProject('tsconfig.json');
+
+gulp.task('clean:js', function () {
+    return del(paths.concatJsDest);
 });
 
-gulp.task('clean:css', function (cb) {
-    rimraf(paths.concatCssDest, cb);
+gulp.task('clean:css', function () {
+    return del(paths.concatCssDest);
 });
 
-gulp.task('clean:libs', function (cb) {
-    rimraf(paths.libDest, cb);
+gulp.task('clean:libs', function () {
+    return del(paths.libDest);
 });
 
-gulp.task('clean:scripts', function (cb) {
-    rimraf(paths.clientDest, cb);
+gulp.task('clean:scripts', function () {
+    return del(paths.clientDest);
 });
 
 gulp.task('clean', ['clean:libs', 'clean:js', 'clean:css', 'clean:scripts']);
@@ -72,25 +76,25 @@ gulp.task('min:css', function () {
 gulp.task('min', ['min:js', 'min:css']);
 
 gulp.task('copy:libs', function () {
-    let tasks = npm_libs.map(lib =>
-        ['css', 'js', 'fonts']
-            .filter(type => lib[type] && lib[type].length > 0)
-            .map(type => {
-                let srcPaths = lib[type].map(file => `${paths.nodeModules}${lib.name}/${file}`);
-                return gulp.src(srcPaths)
-                    .pipe(gulp.dest(`${paths.libDest}${lib.name}/${type}/`));
-            })
-    );
+    let tasks = Object.keys(npm_libs).map(name => {
+        let srcs = npm_libs[name].map(glob => `${paths.nodeModules}${name}/${glob}`);
+        return gulp
+            .src(srcs, { base: paths.nodeModules + name })
+            .pipe(gulp.dest(paths.libDest + name));
+    });
 
-    return merge(tasks);
+    return eventStream.merge(tasks);
 });
 
 gulp.task('copy', ['copy:libs']);
 
 gulp.task('build:ts', function () {
-    return gulp.src(paths.clientSrcTs)
-        .pipe(typescript())
-        .pipe(gulp.dest(paths.clientDest));
+     quizRouletteTsProject.src()
+        .pipe(sourcemaps.init())
+        .pipe(quizRouletteTsProject())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(paths.clientDest))
+        .pipe(plumber());
 });
 
 gulp.task('build:less', function () {
@@ -102,5 +106,6 @@ gulp.task('build:less', function () {
 gulp.task('build', ['build:ts', 'build:less']);
 
 gulp.task('watch', ['copy', 'build'], function () {
-    gulp.watch(paths.clientSrcTs, 'build:ts');
+    gulp.watch(paths.clientSrcTs, ['build:ts']);
+    gulp.watch(paths.clientSrcLess, ['build:less'])
 });

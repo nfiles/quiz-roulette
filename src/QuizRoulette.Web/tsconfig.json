@@ -2,13 +2,21 @@
     "compileOnSave": true,
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
-        "rootDir": "scripts",
-        "outDir": "wwwroot/dist",
-        "inlineSourceMap": true
+        "module": "system",
+        "moduleResolution": "node",
+        "rootDir": "client",
+        "outDir": "wwwroot/app",
+        "sourceMap": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
     "exclude": [
-        "node_modules",
-        "wwwroot"
-    ]
+        "node_modules"
+    ],
+    "files": [
+        "client/**/*.ts"
+    ],
+    "typeAcquisition": {
+        "enable": true
+    }
 }

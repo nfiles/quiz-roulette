@@ -7,5 +7,6 @@
         "**/*.lock.json": { "when": "$(basename).json" },
         "**/bin/": true,
         "**/obj/": true
-    }
+    },
+    "typescript.tsdk": "src/QuizRoulette.Web/node_modules/typescript/lib"
 }
