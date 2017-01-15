@@ -15,8 +15,5 @@
     ],
     "files": [
         "client/**/*.ts"
-    ],
-    "typeAcquisition": {
-        "enable": true
-    }
+    ]
 }

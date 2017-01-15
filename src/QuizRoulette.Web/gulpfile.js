@@ -10,7 +10,6 @@ const ts = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const eventStream = require('event-stream');
-const plumber=require('gulp-plumber');
 
 const webroot = './wwwroot/';
 
@@ -27,16 +26,26 @@ const paths = {
     clientDest: webroot + 'app/'
 };
 paths.clientSrcTs = paths.clientSrc + '**/*.ts';
+paths.clientSrcJs = paths.clientSrc + '**/*.js';
 paths.clientSrcLess = paths.clientSrc + '**/*.less';
 
 const npm_libs = {
-    bootstrap: [
+    'bootstrap': [
         'dist/css/bootstrap.min.css',
         'dist/js/bootstrap.min.js',
         'dist/fonts/*'
     ],
-    jquery: ['dist/jquery.min.js'],
-    'core-js': ['client/shim.min.js']
+    'jquery': ['dist/jquery.min.js'],
+    'core-js': ['client/shim.min.js'],
+    'systemjs': ['dist/system.js'],
+    '@angular': ['*/bundles/*.umd.js'],
+    'traceur': [
+        'bin/traceur.js',
+        'bin/BrowserSystem.js',
+        'src/bootstrap.js'
+    ],
+    'rxjs': ['**/*.js'],
+    'zone.js': ['dist/zone.js']
 };
 
 const quizRouletteTsProject = ts.createProject('tsconfig.json');
@@ -89,12 +98,16 @@ gulp.task('copy:libs', function () {
 gulp.task('copy', ['copy:libs']);
 
 gulp.task('build:ts', function () {
-     quizRouletteTsProject.src()
+    return quizRouletteTsProject.src()
         .pipe(sourcemaps.init())
         .pipe(quizRouletteTsProject())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(paths.clientDest))
-        .pipe(plumber());
+        .pipe(gulp.dest(paths.clientDest));
+});
+
+gulp.task('build:js', function () {
+    return gulp.src(paths.clientSrcJs)
+        .pipe(gulp.dest(paths.clientDest));
 });
 
 gulp.task('build:less', function () {
@@ -103,9 +116,10 @@ gulp.task('build:less', function () {
         .pipe(gulp.dest(paths.clientDest));
 })
 
-gulp.task('build', ['build:ts', 'build:less']);
+gulp.task('build', ['build:ts', 'build:js', 'build:less']);
 
 gulp.task('watch', ['copy', 'build'], function () {
     gulp.watch(paths.clientSrcTs, ['build:ts']);
+    gulp.watch(paths.clientSrcJs, ['build:js']);
     gulp.watch(paths.clientSrcLess, ['build:less'])
 });
