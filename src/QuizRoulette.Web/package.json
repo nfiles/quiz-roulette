@@ -39,7 +39,6 @@
     "systemjs": "^0.19.41",
     "traceur": "0.0.111",
     "typescript": "^2.1.4",
-    "webpack": "^1.14.0",
     "zone.js": "^0.7.2"
   }
 }

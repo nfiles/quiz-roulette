@@ -12,7 +12,8 @@ const uglify = require('gulp-uglify');
 const eventStream = require('event-stream');
 
 const webroot = './wwwroot/';
-
+const clientSrc = './client/';
+const nodeModules = './node_modules/';
 const paths = {
     js: webroot + 'js/**/*.js',
     minJs: webroot + 'js/**/*.min.js',
@@ -21,13 +22,11 @@ const paths = {
     concatJsDest: webroot + 'js/site.min.js',
     concatCssDest: webroot + 'css/site.min.css',
     libDest: webroot + 'lib/',
-    nodeModules: './node_modules/',
-    clientSrc: './client/',
-    clientDest: webroot + 'app/'
+    clientDest: webroot + 'app/',
+    clientSrcTs: clientSrc + '**/*.ts',
+    clientSrcJs: clientSrc + '**/*.js',
+    clientSrcLess: clientSrc + '**/*.less'
 };
-paths.clientSrcTs = paths.clientSrc + '**/*.ts';
-paths.clientSrcJs = paths.clientSrc + '**/*.js';
-paths.clientSrcLess = paths.clientSrc + '**/*.less';
 
 const npm_libs = {
     'bootstrap': [
@@ -86,9 +85,9 @@ gulp.task('min', ['min:js', 'min:css']);
 
 gulp.task('copy:libs', function () {
     let tasks = Object.keys(npm_libs).map(name => {
-        let srcs = npm_libs[name].map(glob => `${paths.nodeModules}${name}/${glob}`);
+        let srcs = npm_libs[name].map(glob => `${nodeModules}${name}/${glob}`);
         return gulp
-            .src(srcs, { base: paths.nodeModules + name })
+            .src(srcs, { base: nodeModules + name })
             .pipe(gulp.dest(paths.libDest + name));
     });
 

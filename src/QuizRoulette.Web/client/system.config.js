@@ -1,10 +1,7 @@
 (function () {
     var packages = {
         'rxjs': { defaultExtension: 'js' },
-        'traceur': { main: 'dist/commonjs/traceur.js' },
-        'app': {
-            defaultExtension: 'js'
-        }
+        'app': { defaultExtension: 'js' }
     };
     [
         'common',
@@ -21,15 +18,10 @@
         };
     });
     SystemJS.config({
-        //baseURL: '/app',
         map: {
             '@angular': '/lib/@angular',
-            'rxjs': '/lib/rxjs',
-            'traceur': '/lib/traceur',
+            'rxjs': '/lib/rxjs'
         },
         packages: packages
-        //defaultJSExtensions: true,
-        //transpiler: false,
-        //runtime: false
     });
 })();
