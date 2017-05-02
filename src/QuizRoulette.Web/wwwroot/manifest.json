@@ -1,0 +1,12 @@
+{
+  "common.css": "http://localhost:8080/css/common.css",
+  "common.js": "http://localhost:8080/js/common.js",
+  "quiz-roulette.js": "http://localhost:8080/js/quiz-roulette.js",
+  "static/glyphicons-halflings-regular.eot": "http://localhost:8080/static/glyphicons-halflings-regular.f4769f9bdb7466be65088239c12046d1.eot",
+  "static/glyphicons-halflings-regular.svg": "http://localhost:8080/static/glyphicons-halflings-regular.89889688147bd7575d6327160d64e760.svg",
+  "static/glyphicons-halflings-regular.ttf": "http://localhost:8080/static/glyphicons-halflings-regular.e18bbf611f2a2e43afc071aa2f4e1512.ttf",
+  "static/glyphicons-halflings-regular.woff": "http://localhost:8080/static/glyphicons-halflings-regular.fa2772327f55d8198301fdb8bcfc8158.woff",
+  "static/glyphicons-halflings-regular.woff2": "http://localhost:8080/static/glyphicons-halflings-regular.448c34a56d699c29117adc64c43affeb.woff2",
+  "vendor.css": "http://localhost:8080/css/vendor.css",
+  "vendor.js": "http://localhost:8080/js/vendor.js"
+}

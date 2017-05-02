@@ -1,14 +1,12 @@
 using System;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace QuizRoulette.Web.Controllers
+namespace QuizRoulette.Web.ApiControllers
 {
-    // [Route("api/[controller]")]
     public abstract class RestController<TEntity, TKey> : Controller
         where TKey : new()
         where TEntity : class, new()
