@@ -2,12 +2,8 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'hello-world',
-    template: `
-        <div>Hello, {{name}}!</div>
-        <div>
-            <input type="text" [(ngModel)]="name" />
-        </div>
-    `
+    styleUrls: ['hello-world.component.less'],
+    templateUrl: 'hello-world.component.html'
 })
 export class HelloWorldComponent {
     @Input() public name: string = 'world';

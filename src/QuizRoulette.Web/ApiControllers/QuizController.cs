@@ -2,7 +2,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using QuizRoulette.Database;
 
-namespace QuizRoulette.Web.Controllers
+namespace QuizRoulette.Web.ApiControllers
 {
     [Route("api/[controller]")]
     public class QuizController : RestController<Quiz, Guid>

@@ -1,19 +1,18 @@
 {
-    "compileOnSave": true,
     "compilerOptions": {
+        "lib": [
+            "dom",
+            "es2015",
+            "es2015.reflect"
+        ],
         "target": "es5",
-        "module": "system",
+        "module": "es6",
         "moduleResolution": "node",
-        "rootDir": "client",
-        "outDir": "wwwroot/app",
         "sourceMap": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },
     "exclude": [
         "node_modules"
-    ],
-    "files": [
-        "client/**/*.ts"
     ]
 }

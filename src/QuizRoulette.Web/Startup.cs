@@ -1,12 +1,17 @@
 using System;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using QuizRoulette.Database;
+using QuizRoulette.Web.Services;
 using WebApplication.Services;
 
 namespace WebApplication
@@ -48,6 +53,22 @@ namespace WebApplication
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddScoped<IUrlHelperFactory, UrlHelperFactory>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddScoped<IUrlHelper>(provider =>
+                provider.GetService<IUrlHelperFactory>().GetUrlHelper(
+                    provider.GetService<IActionContextAccessor>().ActionContext
+                )
+            );
+
+            services.AddScoped<IAssetPathService>(
+                provider => new AssetPathService(
+                    provider.GetService<IUrlHelper>(),
+                    provider.GetService<IHostingEnvironment>().WebRootPath +
+                     "/manifest.json"
+                )
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

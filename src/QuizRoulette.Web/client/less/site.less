@@ -1,0 +1,18 @@
+@import (less) '~bootstrap/less/variables.less';
+@footer-height: 50px;
+
+.body-content {
+  min-height: 100vh;
+  padding-top: @navbar-height;
+  padding-bottom: @footer-height;
+  position: relative;
+
+  footer {
+    border-top: 1px solid #ccc;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px 0;
+  }
+}

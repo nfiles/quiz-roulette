@@ -234,3 +234,9 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# webpack build output
+wwwroot/css
+wwwroot/js
+wwwroot/static
+wwwroot/manifest.json
