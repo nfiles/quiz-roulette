@@ -239,3 +239,4 @@ _Pvt_Extensions
 wwwroot/css
 wwwroot/js
 wwwroot/static
+wwwroot/manifest.json

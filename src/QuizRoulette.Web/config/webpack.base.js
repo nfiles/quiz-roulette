@@ -1,17 +1,18 @@
 const webpack = require('webpack');
 const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 const WebpackManifestPlugin = require('webpack-manifest-plugin');
+const cors = require('cors');
 
 const root = require('./helpers').root;
 const cssExtractor = new ExtractTextWebpackPlugin({ filename: 'css/[name].css' });
 
-module.exports = ({ publicPath }) => {
+const entryScript = String(process.env.npm_lifecycle_script).trim().split(' ')[0];
+const publicPath = entryScript === 'webpack-dev-server'
+    ? 'http://localhost:8080/'
+    : '/';
+
+module.exports = ({ }) => {
     return {
-        entry: {
-            'vendor': root('client/vendor.ts'),
-            'common': root('client/common.ts'),
-            'quiz-roulette': root('client/quiz-roulette/main.ts')
-        },
         output: {
             filename: 'js/[name].js',
             path: root('wwwroot')
@@ -21,7 +22,6 @@ module.exports = ({ publicPath }) => {
         },
         module: {
             rules: [
-                { test: /\.ts$/, loader: ['awesome-typescript-loader', 'angular2-template-loader'] },
                 { test: /\.html$/, loader: ['html-loader'] },
                 {
                     test: /\.less$/,
@@ -31,7 +31,6 @@ module.exports = ({ publicPath }) => {
                             loader: ['raw-loader', 'css-loader?importLoaders=1', 'less-loader']
                         },
                         {
-                            // exclude: root('client/quiz-roulette'),
                             loader: cssExtractor.extract(['css-loader', 'less-loader'])
                         }
                     ],
@@ -61,6 +60,12 @@ module.exports = ({ publicPath }) => {
                 'jQuery': 'jquery',
                 'jquery': 'jquery'
             }),
+            new webpack.ContextReplacementPlugin(
+                // The (\\|\/) piece accounts for path separators in *nix and Windows
+                /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+                root('client'), // location of your src
+                {} // a map of your routes
+            ),
             new WebpackManifestPlugin({
                 writeToFileEmit: true,
                 fileName: 'manifest.json',
@@ -71,6 +76,12 @@ module.exports = ({ publicPath }) => {
         cache: true,
         watchOptions: {
             ignored: /(node_modules|manifest\.json$)/
+        },
+        devServer: {
+            setup(app) {
+                app.use(cors());
+            },
+            stats: 'minimal'
         }
     };
 };

@@ -5,7 +5,7 @@
             "es2015",
             "es2015.reflect"
         ],
-        "target": "es2015",
+        "target": "es5",
         "module": "es6",
         "moduleResolution": "node",
         "sourceMap": true,

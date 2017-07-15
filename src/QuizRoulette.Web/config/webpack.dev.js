@@ -1,15 +1,17 @@
 const webpackMerge = require('webpack-merge');
-const cors = require('cors');
+const { root } = require('./helpers');
 
-const publicPath = 'http://localhost:8080/';
-
-const baseConfig = require('./webpack.base.js')({ publicPath });
+const baseConfig = require('./webpack.base.js')({});
 
 module.exports = webpackMerge(baseConfig, {
-    devServer: {
-        setup(app) {
-            app.use(cors());
-        },
-        stats: 'minimal'
+    entry: {
+        'vendor': root('client/vendor.ts'),
+        'common': root('client/common.ts'),
+        'quiz-roulette': root('client/quiz-roulette/main.ts')
+    },
+    module: {
+        rules: [
+            { test: /\.ts$/, loader: ['awesome-typescript-loader', 'angular2-template-loader'] }
+        ]
     }
 });

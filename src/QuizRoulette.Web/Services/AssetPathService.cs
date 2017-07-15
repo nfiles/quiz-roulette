@@ -32,12 +32,10 @@ namespace QuizRoulette.Web.Services
         public string GetPath(string name)
         {
             UpdatePaths();
-            System.Console.WriteLine($"Getting asset: {name}");
             if (!_assetPaths.ContainsKey(name))
             {
                 throw new FileNotFoundException(name);
             }
-            System.Console.WriteLine($"Asset path: {_assetPaths[name]}");
 
             return _urlHelper.Content(_assetPaths[name]);
         }
